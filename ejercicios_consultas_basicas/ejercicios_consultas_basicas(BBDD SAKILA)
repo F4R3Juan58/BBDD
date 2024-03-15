@@ -62,8 +62,8 @@ SELECT first_name, last_name FROM actor WHERE last_name LIKE 'AKROYD' OR last_na
 
 -- Ejercicio 16 --
 -- Obtener una lista de todos los nombres de pila, tanto de actores como de clientes, sin que se repita ninguno y que se muestren por orden alfabético. --
-SELECT first_name FROM actor UNION SELECT first_name from customer;
+SELECT first_name FROM actor UNION SELECT first_name FROM customer ORDER BY first_name;
 
 -- Ejercicio 17 --
 -- Obtener una lista que incluya (también datos repetidos) los nombres de clientes que empiecen por A o por B y los nombres de actores que contengan la letra D y que se muestren por orden alfabético descendente. --
-SELECT first_name FROM actor WHERE first_name LIKE '%D%' UNION ALL SELECT first_name from customer WHERE first_name LIKE 'A%' OR first_name LIKE 'B%') ORDER BY first_name DESC;
+SELECT first_name FROM actor WHERE first_name LIKE '%D%' UNION ALL SELECT first_name from customer WHERE first_name LIKE 'A%' OR first_name LIKE 'B%' ORDER BY first_name DESC;
