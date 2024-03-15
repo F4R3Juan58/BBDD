@@ -1,52 +1,69 @@
 USE sakila;
 
 -- Ejercicio 1 --
+-- Obtener todas las columnas y todas las filas de la tabla de películas (film).  --
 SELECT * FROM film;
 
--- Ejercicio 2 --
+-- Ejercicio 2 -- 
+-- Obtener una tabla con los títulos de todas las películas y su duración (length). --
 SELECT title , length FROM film;
 
 -- Ejercicio 3 --
+-- Averiguar todos los precios de alquiler (rental_rate) mostrando solo una vez cada precio distinto. --
 SELECT DISTINCT rental_rate FROM film;
 
 -- Ejercicio 4 --
+-- Repetir el ejercicio anterior, pero haciendo que en la cabecera de esa columna de resultados ponga "Precios ". --
 SELECT DISTINCT rental_rate as precios FROM film;
 
 -- Ejercicio 5 --
+-- Obtener toda la información de los clientes (tabla customer) asociados a la tienda 2 (store_id = 2). --
 SELECT * FROM customer WHERE store_id = 2;
 
 -- Ejercicio 6 --
+-- Obtener toda la información sobre los actores cuyo nombre empiece por una letra anterior a la D, ordenados por el nombre en orden descendente.  --
 SELECT * FROM actor WHERE first_name <'D' ORDER BY first_name DESC;
 
 -- Ejercicio 7 --
+-- Obtener el nombre y apellido de los actores que se llamen Albert o se apelliden Allen. --
 SELECT first_name, last_name FROM actor WHERE first_name='Albert' OR last_name='Allen';
 
 -- Ejercicio 8 -- 
+-- Obtener el resultado contrario a la consulta anterior. --
 SELECT first_name, last_name FROM actor WHERE NOT (first_name='Albert' AND last_name='Allen');
 
 -- Ejercicio 9 --
+-- Obtener el mismo resultado que el ejercicio anterior, pero de otra manera. --
 SELECT first_name, last_name FROM actor WHERE first_name NOT LIKE 'Albert' AND last_name NOT LIKE 'Allen';
 
 -- Ejercicio 10 --
+-- Obtener el nombre, apellido y número de tienda (store_id) de los clientes de la tienda 2 cuyo apellido termina en -SEN o en -SON. Presta atención a dónde deben ir los paréntesis. --
 SELECT first_name, last_name, store_id FROM customer WHERE store_id=2 AND (last_name LIKE '%SEN' OR last_name LIKE '%SON');
 
 -- Ejercicio 11 --
+-- ¿Qué se obtiene en el ejercicio anterior si no usamos paréntesis? --
 SELECT first_name, last_name, store_id FROM customer WHERE store_id=2 AND last_name LIKE '%SEN' OR last_name LIKE '%SON';
 
 -- Ejercicio 12 -- 
+-- Obtener todos los datos de los actores cuyo id está comprendido entre 10 y 20 (incluidos) y que la segunda letra de su apellido sea la A. --
 SELECT * FROM actor WHERE (actor_id >=10 AND actor_id<=20) AND last_name LIKE '_A%';
 
 -- Ejercicio 13 --
+-- Lo mismo que el ejercicio anterior, pero esta vez sin que 10 y 20 estén incluidos. --
 SELECT * FROM actor WHERE (actor_id >10 AND actor_id<20) AND last_name LIKE '_A%';
 
 -- Ejercicio 14 --
+-- Obtener el nombre y apellido de todos los actores que se apelliden AKROYD o ALLEN o BERRY. --
 SELECT first_name, last_name FROM actor WHERE last_name='AKROYD' OR last_name='ALLEN' OR last_name='BERRY';
 
 -- Ejercicio 15 --
+-- Obtener el mismo resultado que el ejercicio anterior, pero de otra manera. --
 SELECT first_name, last_name FROM actor WHERE last_name LIKE 'AKROYD' OR last_name LIKE 'ALLEN' OR last_name LIKE 'BERRY';
 
 -- Ejercicio 16 --
+-- Obtener una lista de todos los nombres de pila, tanto de actores como de clientes, sin que se repita ninguno y que se muestren por orden alfabético. --
 SELECT first_name FROM actor UNION SELECT first_name from customer;
 
 -- Ejercicio 17 --
+-- Obtener una lista que incluya (también datos repetidos) los nombres de clientes que empiecen por A o por B y los nombres de actores que contengan la letra D y que se muestren por orden alfabético descendente. --
 SELECT first_name FROM actor WHERE first_name LIKE '%D%' UNION ALL SELECT first_name from customer WHERE first_name LIKE 'A%' OR first_name LIKE 'B%') ORDER BY first_name DESC;
