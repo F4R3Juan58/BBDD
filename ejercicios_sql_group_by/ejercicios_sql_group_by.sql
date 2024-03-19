@@ -1,60 +1,55 @@
-CREATE DATABASE IF NOT EXISTS GroupBy_Evaluar; 
-USE GroupBy_Evaluar;
-CREATE TABLE IF NOT EXISTS visitantes(
-  nombre varchar(30),
-  edad tinyint unsigned,
-  sexo char(1),
-  domicilio varchar(30),
-  ciudad varchar(20),
-  telefono varchar(11),
-  montocompra decimal (6,2) unsigned
- );
+-- PARA EL EJERCICIO 1
 
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Susana Molina', 28,'f','Colon 123','Cordoba',null,45.50); 
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Marcela Mercado',36,'f','Avellaneda 345','Cordoba','4545454',0);
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Alberto Garcia',35,'m','Gral. Paz 123','Alta Gracia','03547123456',25); 
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Teresa Garcia',33,'f','Gral. Paz 123','Alta Gracia','03547123456',0);
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Roberto Perez',45,'m','Urquiza 335','Cordoba','4123456',33.20);
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Marina Torres',22,'f','Colon 222','Villa Dolores','03544112233',25);
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Julieta Gomez',24,'f','San Martin 333','Alta Gracia','03547121212',53.50);
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Roxana Lopez',20,'f','Triunvirato 345','Alta Gracia',null,0);
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Liliana Garcia',50,'f','Paso 999','Cordoba','4588778',48);
- insert into visitantes (nombre,edad, sexo,domicilio,ciudad,telefono,montocompra)
-  values ('Juan Torres',43,'m','Sarmiento 876','Cordoba','4988778',15.30);
-  SELECT * FROM visitantes;
-  
-  -- Ejercicio 1 --
-  SELECT ciudad FROM visitantes GROUP BY ciudad;
-  
-  -- Ejercicio 2 -- 
-  SELECT DISTINCT ciudad visitantes;
-  
-  -- Ejercicio 3 --
-  SELECT COUNT(nombre),ciudad FROM visitantes GROUP BY ciudad;
-  
-  -- Ejercicio 4 --
-  SELECT COUNT(nombre),telefono,ciudad FROM visitantes WHERE telefono IS NOT NULL GROUP BY ciudad;
-  
-  -- EJercicio 5 --
-  SELECT SUM(montocompra),sexo FROM visitantes GROUP BY sexo; 
-  
-  -- EJercicio 6 --
-  SELECT MAX(montocompra) AS 'Maximo',MIN(montocompra) AS 'Minimo',sexo FROM visitantes GROUP BY sexo;
-  
-  -- Ejercicio 7 --
-   SELECT AVG(montocompra),ciudad FROM visitantes GROUP BY ciudad; 
-   
-  -- Ejercicio 8 --
-  SELECT COUNT(nombre),ciudad,sexo FROM visitantes GROUP BY ciudad,sexo;
-  
-  -- Ejercicio 9 --
-  SELECT COUNT(nombre),ciudad FROM visitantes GROUP BY ciudad HAVING ciudad<>'Cordoba';
+DROP DATABASE IF EXISTS ejergroupby;
+
+CREATE DATABASE ejergroupby CHARACTER SET utf8mb4;
+
+USE ejergroupby;
+
+CREATE TABLE empleados (
+
+IdEmpleado INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+Nombre VARCHAR(20),
+
+Apellido VARCHAR(20),
+
+F_nacimiento DATE,
+
+Sexo VARCHAR(1),
+
+Puesto VARCHAR(20),
+
+Salario INT
+
+);
+
+INSERT INTO empleados VALUES (NULL, 'Carlos', 'Rubio', '1975-05-12', 'H', 'Almacén', 1500);
+
+INSERT INTO empleados VALUES (NULL, 'Elena', 'Jiménez', '1986-09-06', 'M', 'Administración', 1400);
+
+INSERT INTO empleados VALUES (NULL, 'José', 'Rodríguez', '2000-03-17', 'H', 'Almacén', 1000);
+
+INSERT INTO empleados VALUES (NULL, 'María', 'Calvo', '1995-12-12', 'M', 'Marketing', 1700);
+
+INSERT INTO empleados VALUES (NULL, 'Ana', 'Ruiz', '1960-01-25', 'M', 'Dirección', 2000);
+
+INSERT INTO empleados VALUES (NULL, 'Alberto', 'García', '1972-04-13', 'H', 'Administración', 1300);
+
+INSERT INTO empleados VALUES (NULL, 'Luis', 'Sánchez', '1990-08-30', 'H', 'Marketing', 1600);
+
+-- Ejercicio 1A --
+-- Cuántos empleados hay de cada sexo. --
+SELECT COUNT(sexo), sexo FROM empleados GROUP BY Sexo;
+-- Cuántos empleados son mujeres.--
+SELECT COUNT(sexo), sexo FROM empleados WHERE sexo<>"m" GROUP BY Sexo;
+
+-- Ejercico 1B --
+-- Salario medio, máximo y mínimo por cada sexo. --
+SELECT MAX(salario) AS Maximo ,MIN(salario) AS Minimo ,AVG(salario) AS Medio, sexo FROM empleados GROUP BY sexo;
+-- Lo mismo, pero que solo se muestren esos datos del sexo que tiene un salario medio mayor de 1500.--
+SELECT MAX(salario) AS Maximo ,MIN(salario) AS Minimo ,AVG(salario) AS Medio, sexo FROM empleados GROUP BY sexo HAVING Medio>1500;
+-- Lo mismo que b.1, pero que se muestren también esos datos del sexo que cumpla que tiene un salario mínimo inferior o igual a 1000. --
+SELECT MAX(salario) AS Maximo ,MIN(salario) AS Minimo ,AVG(salario) AS Medio, sexo FROM empleados GROUP BY sexo HAVING Minimo<=1000;
+-- Lo mismo que b, pero solo para los empleados del departamento de Administración. --
+SELECT MAX(salario),MIN(salario),AVG(salario) FROM empleados WHERE Puesto="Administración" GROUP BY puesto;
